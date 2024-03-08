@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-<body>
+<body style="margin:0; height:100%; overflow:hidden">
+    <div style="
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:-1;
+        background:url('giphy.gif') center center no-repeat;
+        background-size: cover;
+    ">
+    </div>
 
     <H1>PASTEQUE </H1>
 
@@ -100,6 +111,24 @@
                 drawAll();
             }
         });
+    </script>
+
+
+    <button onclick="fetchJoke()">Cliquez ici pour une blague</button>
+
+    <script>
+        function fetchJoke() {
+            fetch('https://www.blagues-api.fr/api/random', {
+                headers: {
+                    'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjE5MTkyMzE4NTM0NjE1MDQyIiwibGltaXQiOjEwMCwia2V5IjoiVFp2Y2NvenZET1lMUWt0ZU9vNmxJUGE5NUxtcUdvUjZSaFU0QzkxUkVtbUdZRkhJeDkiLCJjcmVhdGVkX2F0IjoiMjAyNC0wMy0wOFQxMzo0MjoxNSswMDowMCIsImlhdCI6MTcwOTkwNTMzNX0.3RY0yHJJa64ntrIi_q2B4DQ3R_n3JBYSwb_sjZQe6_k
+    `
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.joke + "\n\n" + data.answer);
+                })
+        }
     </script>
 
 </body>

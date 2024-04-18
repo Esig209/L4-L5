@@ -30,7 +30,7 @@ var verification = setInterval(function(){ // permet de vérifier si le perso es
         if(score > bestScore) { 
             bestScore = score; 
         }
-        bestScoreDisplay.innerText = "Meilleur score : " + bestScore;
+        bestScoreDisplay.innerText = "Meilleur Score : " + bestScore;
         score = 0;
         scoreText = "Score mon loulou : " + score;
         scoreDisplay.innerText = scoreText;

@@ -1,136 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section>
+        <div class="jeu">
+            <div class="perso">
+                <img src="img.png" alt="">
+            </div>
+            <div class="obstacles"></div>
+        </div>
+    </section>
 
-<body style="margin:0; height:100%; overflow:hidden">
-    <div style="
-        position:fixed;
-        top:0;
-        left:0;
-        right:0;
-        bottom:0;
-        z-index:-1;
-        background:url('giphy.gif') center center no-repeat;
-        background-size: cover;
-    ">
+    <div class="control">
+        <button onclick="sauter()">SAUTER</button>
+        <a href="index.html">START</a>
     </div>
 
-    <H1>PASTEQUE </H1>
-
-    <canvas id="monCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
-        Votre navigateur ne supporte pas l'élément HTML5 Canvas.
-    </canvas>
-
-    <select id="shapeSelect">
-        <option value="rectangle">Rectangle</option>
-        <option value="square">Carré</option>
-        <option value="triangle">Triangle</option>
-    </select>
-    <button id="addShape">Ajouter une forme</button>
-    <button id="removeShape">Supprimer une forme</button>
-
-    <script>
-        var c = document.getElementById("monCanvas");
-        var ctx = c.getContext("2d");
-
-        var shapes = [{ type: 'rectangle', x: 50, y: 50, width: 200, height: 100 }];
-        var selectedShapeIndex = 0;
-
-        function drawShape(shape, isSelected) {
-            switch (shape.type) {
-                case 'rectangle':
-                    ctx.fillStyle = isSelected ? "#FFFF00" : "#FF0000";
-                    ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
-                    break;
-                case 'square':
-                    ctx.fillStyle = isSelected ? "#FFFF00" : "#00FF00";
-                    ctx.fillRect(shape.x, shape.y, shape.width, shape.width);
-                    break;
-                case 'triangle':
-                    ctx.fillStyle = isSelected ? "#FFFF00" : "#0000FF";
-                    ctx.beginPath();
-                    ctx.moveTo(shape.x, shape.y);
-                    ctx.lineTo(shape.x + shape.width / 2, shape.y + shape.height);
-                    ctx.lineTo(shape.x + shape.width, shape.y);
-                    ctx.closePath();
-                    ctx.fill();
-                    break;
-            }
-        }
-
-        function drawAll() {
-            ctx.clearRect(0, 0, c.width, c.height);
-            shapes.forEach((shape, index) => {
-                drawShape(shape, index === selectedShapeIndex);
-            });
-        }
-
-        drawAll();
-
-        c.addEventListener('click', function (e) {
-            var rect = c.getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var y = e.clientY - rect.top;
-            shapes.forEach((shape, index) => {
-                if (x >= shape.x && x <= shape.x + shape.width && y >= shape.y && y <= shape.y + shape.height) {
-                    selectedShapeIndex = index;
-                    drawAll();
-                }
-            });
-        });
-
-        window.addEventListener('keydown', function (e) {
-            var selectedShape = shapes[selectedShapeIndex];
-            switch (e.key) {
-                case 'ArrowUp':
-                    selectedShape.y -= 10;
-                    break;
-                case 'ArrowDown':
-                    selectedShape.y += 10;
-                    break;
-                case 'ArrowLeft':
-                    selectedShape.x -= 10;
-                    break;
-                case 'ArrowRight':
-                    selectedShape.x += 10;
-                    break;
-            }
-            drawAll();
-        });
-
-        document.getElementById("addShape").addEventListener("click", function () {
-            var shapeType = document.getElementById("shapeSelect").value;
-            shapes.push({ type: shapeType, x: 50, y: 50, width: 200, height: 100 });
-            selectedShapeIndex = shapes.length - 1;
-            drawAll();
-        });
-
-        document.getElementById("removeShape").addEventListener("click", function () {
-            if (shapes.length > 1) {
-                shapes.splice(selectedShapeIndex, 1);
-                selectedShapeIndex = Math.min(selectedShapeIndex, shapes.length - 1);
-                drawAll();
-            }
-        });
-    </script>
-
-
-    <button onclick="fetchJoke()">Cliquez ici pour une blague</button>
-
-    <script>
-        function fetchJoke() {
-            fetch('https://www.blagues-api.fr/api/random', {
-                headers: {
-                    'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjE5MTkyMzE4NTM0NjE1MDQyIiwibGltaXQiOjEwMCwia2V5IjoiVFp2Y2NvenZET1lMUWt0ZU9vNmxJUGE5NUxtcUdvUjZSaFU0QzkxUkVtbUdZRkhJeDkiLCJjcmVhdGVkX2F0IjoiMjAyNC0wMy0wOFQxMzo0MjoxNSswMDowMCIsImlhdCI6MTcwOTkwNTMzNX0.3RY0yHJJa64ntrIi_q2B4DQ3R_n3JBYSwb_sjZQe6_k
-    `
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.joke + "\n\n" + data.answer);
-                })
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
